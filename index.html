@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff3f8">
+<title>Pinkgue — Find your aesthetic</title>
+<style>
+:root{--pink:#e879aa;--deep:#c94f89;--pale:#fff1f7;--line:#f4dce8;--ink:#493743;--muted:#987f8e}
+*{box-sizing:border-box}body{margin:0;background:#fffafd;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+header{height:76px;display:flex;align-items:center;gap:24px;padding:0 5%;background:#fff;position:sticky;top:0;z-index:5;border-bottom:1px solid #f7e7ef}
+.logo{font-size:30px;font-weight:850;letter-spacing:-1.8px;color:var(--deep);white-space:nowrap}.logo span{color:#f3a6c7}
+.search{flex:1;max-width:650px;position:relative}.search input{width:100%;border:0;outline:0;background:#fff4f8;border-radius:24px;padding:14px 18px 14px 44px;font-size:14px;color:var(--ink)}.search:before{content:"⌕";position:absolute;left:17px;top:7px;font-size:25px;color:#bd8aa2}
+.header-actions{display:flex;align-items:center;gap:10px;margin-left:auto}.iconbtn{border:0;background:#fff4f8;color:var(--deep);width:40px;height:40px;border-radius:50%;font-size:19px;cursor:pointer}.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#f8c6dc,#d8c5f5);display:grid;place-items:center;color:white;font-weight:800}
+nav{display:flex;justify-content:center;gap:8px;padding:18px 12px 8px;flex-wrap:wrap}.navbtn{border:0;background:transparent;color:#987f8e;padding:10px 18px;border-radius:22px;font-weight:650;cursor:pointer}.navbtn.active,.navbtn:hover{background:#ffe8f1;color:var(--deep)}
+main{max-width:1180px;margin:0 auto;padding:20px 28px 90px}.welcome{display:flex;justify-content:space-between;align-items:end;margin:10px 0 22px;gap:16px}.eyebrow{font-size:11px;letter-spacing:2px;color:#d37aa2;font-weight:800}.welcome h1{font-size:clamp(25px,4vw,36px);letter-spacing:-1.2px;margin:6px 0}.welcome p{color:var(--muted);margin:0;font-size:14px}.pill{background:#fff0f6;color:#c45c8d;padding:9px 14px;border-radius:20px;font-size:12px;font-weight:700}
+.categories{display:flex;gap:9px;overflow:auto;padding:3px 0 20px;scrollbar-width:none}.cat{border:1px solid var(--line);background:white;color:#8c7482;border-radius:20px;padding:9px 15px;white-space:nowrap;cursor:pointer;font-size:13px}.cat.active{background:#f7cfe0;color:#8d3c66;border-color:#f7cfe0;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}.card{background:white;border:1px solid #f5e7ee;border-radius:17px;overflow:hidden;box-shadow:0 5px 18px #9d66800b;min-width:0}.photo{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#faeaf1}.cardbody{padding:11px 12px 12px}.caption{font-size:13px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0 0 10px}.actions{display:flex;align-items:center;gap:7px}.action{border:0;background:#fff4f8;color:#a66d88;border-radius:18px;padding:7px 10px;cursor:pointer;font-size:12px}.action.liked{background:#ffe0eb;color:#d43f7b}.action.saved{background:#eee7ff;color:#8062b3}.count{font-size:11px;color:#a68b9a;margin-left:auto}
+.empty{grid-column:1/-1;text-align:center;padding:55px 10px;color:var(--muted)}
+footer{text-align:center;color:#b69aa9;font-size:11px;padding:30px 10px 8px}
+.overlay{position:fixed;inset:0;background:#38233366;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.overlay.show{display:flex}.modal{background:white;border-radius:20px;padding:22px;width:min(430px,100%);box-shadow:0 20px 60px #38233333}.modal h3{margin:0 0 12px}.modal textarea{width:100%;min-height:85px;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;resize:vertical}.modal button{border:0;background:var(--deep);color:white;padding:10px 16px;border-radius:20px;margin-top:10px;cursor:pointer}.commentlist{font-size:13px;color:#7c6472;max-height:140px;overflow:auto}.commentlist p{padding:8px 0;border-bottom:1px solid #f7eaf0;margin:0}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:620px){header{height:65px;padding:0 14px;gap:12px}.logo{font-size:25px}.search{max-width:none}.search input{padding:11px 12px 11px 35px}.search:before{left:12px;top:3px}.header-actions .iconbtn{display:none}main{padding:15px 13px 60px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.cardbody{padding:9px}.welcome{align-items:start;flex-direction:column}.navbtn{padding:9px 13px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">pink<span>gue</span>.</div>
+  <div class="search"><input id="search" placeholder="Aklındaki estetiği keşfet..." aria-label="Fotoğraf ara"></div>
+  <div class="header-actions"><button class="iconbtn" title="Bildirimler">♡</button><div class="avatar">P</div></div>
+</header>
+<nav>
+  <button class="navbtn active" data-view="home">⌂ Ana sayfa</button>
+  <button class="navbtn" data-view="explore">✧ Keşfet</button>
+  <button class="navbtn" data-view="saved">▣ Kaydedilenler</button>
+  <button class="navbtn" data-view="profile">♡ Profilim</button>
+</nav>
+<main>
+  <section class="welcome">
+    <div><div class="eyebrow">YOUR LITTLE INSPIRATION SPACE</div><h1 id="heading">Bugün ne keşfediyoruz? ♡</h1><p id="subheading">Sevdiğin renkler, küçük detaylar ve güzel fikirler burada.</p></div>
+    <div class="pill">✿ find your aesthetic</div>
+  </section>
+  <div class="categories" id="categories">
+    <button class="cat active" data-cat="Tümü">Hepsi</button><button class="cat" data-cat="Coquette">Coquette</button><button class="cat" data-cat="Fashion">Fashion</button><button class="cat" data-cat="Room">Room inspo</button><button class="cat" data-cat="Nature">Nature</button><button class="cat" data-cat="Cute">Cute things</button>
+  </div>
+  <section class="grid" id="grid"></section>
+  <footer>pinkgue ♡ küçük ilhamlar, güzel fikirler. <br>Demo sürüm · Beğeniler ve kaydetmeler bu tarayıcıda örnek olarak çalışır.</footer>
+</main>
+<div class="overlay" id="overlay"><div class="modal"><h3 id="modalTitle">Yorumlar ♡</h3><div class="commentlist" id="commentlist"></div><textarea id="commentInput" placeholder="Tatlı bir yorum yaz..."></textarea><button id="sendComment">Yorumu ekle</button><button id="closeModal" style="background:#f8eaf1;color:#9b6680;margin-left:6px">Kapat</button></div></div>
+<script>
+const photos=[
+{id:1,cat:"Coquette",title:"Pink ribbons & little details",url:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=700&auto=format&fit=crop&q=85",likes:128},
+{id:2,cat:"Room",title:"A soft little corner",url:"https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700&auto=format&fit=crop&q=85",likes:86},
+{id:3,cat:"Fashion",title:"Everyday outfit inspiration",url:"https://images.unsplash.com/photo-1483985988355-763728e1935b?w=700&auto=format&fit=crop&q=85",likes:204},
+{id:4,cat:"Nature",title:"Flowers on a sunny day",url:"https://images.unsplash.com/photo-1490822180406-5e9b8a1b5c5b?w=700&auto=format&fit=crop&q=85",likes:92},
+{id:5,cat:"Cute",title:"Sweet little moments",url:"https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=700&auto=format&fit=crop&q=85",likes:73},
+{id:6,cat:"Coquette",title:"A touch of pink",url:"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=700&auto=format&fit=crop&q=85",likes:156},
+{id:7,cat:"Room",title:"Dreamy bedroom mood",url:"https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=700&auto=format&fit=crop&q=85",likes:111},
+{id:8,cat:"Nature",title:"A quiet garden",url:"https://images.unsplash.com/photo-1497250681960-ef046c08a56e?w=700&auto=format&fit=crop&q=85",likes:67},
+{id:9,cat:"Fashion",title:"Style moodboard",url:"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=700&auto=format&fit=crop&q=85",likes:187},
+{id:10,cat:"Cute",title:"Pastel desk inspiration",url:"https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?w=700&auto=format&fit=crop&q=85",likes:99},
+{id:11,cat:"Coquette",title:"Soft pink aesthetic",url:"https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=700&auto=format&fit=crop&q=85",likes:143},
+{id:12,cat:"Nature",title:"Little green escape",url:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=700&auto=format&fit=crop&q=85",likes:121}
+];
+let liked=new Set(),saved=new Set(),comments={},view="home",category="Tümü",activeComment=0;
+const grid=document.getElementById("grid");
+function render(){
+ let q=document.getElementById("search").value.toLowerCase();
+ let list=photos.filter(p=>(category==="Tümü"||p.cat===category)&&(`${p.title} ${p.cat}`).toLowerCase().includes(q));
+ if(view==="saved")list=list.filter(p=>saved.has(p.id));
+ if(view==="profile")list=list.filter(p=>liked.has(p.id)||saved.has(p.id));
+ document.getElementById("heading").textContent=view==="saved"?"Kaydettiklerin ♡":view==="profile"?"Profilim ✿":view==="explore"?"Yeni ilhamlar keşfet ✧":"Bugün ne keşfediyoruz? ♡";
+ document.getElementById("subheading").textContent=view==="saved"?"Daha sonra bakmak istediklerin burada.":view==="profile"?"Beğendiğin ve kaydettiğin fotoğraflar.":"Sevdiğin renkler, küçük detaylar ve güzel fikirler burada.";
+ grid.innerHTML="";
+ if(!list.length){grid.innerHTML='<div class="empty">Burada henüz bir şey yok. ♡</div>';return}
+ list.forEach(p=>{
+  let el=document.createElement("article");el.className="card";
+  el.innerHTML=`<img class="photo" src="${p.url}" alt="${p.title}" loading="lazy" onerror="this.style.opacity='.25';this.alt='Görsel yüklenemedi'"><div class="cardbody"><p class="caption">${p.title}</p><div class="actions"><button class="action ${liked.has(p.id)?"liked":""}" data-like="${p.id}">${liked.has(p.id)?"♥":"♡"} ${p.likes+(liked.has(p.id)?1:0)}</button><button class="action" data-comment="${p.id}">☏ Yorum</button><button class="action ${saved.has(p.id)?"saved":""}" data-save="${p.id}">${saved.has(p.id)?"✓":"▣"}</button></div></div>`;
+  grid.appendChild(el);
+ });
+}
+document.addEventListener("click",e=>{
+ let l=e.target.closest("[data-like]"),s=e.target.closest("[data-save]"),c=e.target.closest("[data-comment]");
+ if(l){let id=+l.dataset.like;liked.has(id)?liked.delete(id):liked.add(id);render()}
+ if(s){let id=+s.dataset.save;saved.has(id)?saved.delete(id):saved.add(id);render()}
+ if(c){activeComment=+c.dataset.comment;document.getElementById("modalTitle").textContent="Yorumlar ♡";document.getElementById("commentlist").innerHTML=(comments[activeComment]||[]).map(x=>`<p>${escapeHtml(x)}</p>`).join("")||"<p>İlk yorumu sen yaz! ♡</p>";document.getElementById("overlay").classList.add("show")}
+});
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+document.getElementById("sendComment").onclick=()=>{let v=document.getElementById("commentInput").value.trim();if(!v)return;(comments[activeComment]??=[]).push(v);document.getElementById("commentlist").innerHTML=comments[activeComment].map(x=>`<p>${escapeHtml(x)}</p>`).join("");document.getElementById("commentInput").value=""};
+document.getElementById("closeModal").onclick=()=>document.getElementById("overlay").classList.remove("show");
+document.getElementById("search").addEventListener("input",render);
+document.querySelectorAll(".cat").forEach(b=>b.onclick=()=>{document.querySelectorAll(".cat").forEach(x=>x.classList.remove("active"));b.classList.add("active");category=b.dataset.cat;render()});
+document.querySelectorAll(".navbtn").forEach(b=>b.onclick=()=>{document.querySelectorAll(".navbtn").forEach(x=>x.classList.remove("active"));b.classList.add("active");view=b.dataset.view;render()});
+render();
+</script>
+</body></html>
